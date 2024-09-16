@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from 'react';
 import Link from "next/link"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -15,6 +15,39 @@ interface LandingProps {
 }
 
 const Landing: React.FC<LandingProps> = ({ posts }) => {
+
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: rolmovel@gmail.com,
+          subject: 'Nuevo mensaje desde tu web',
+          text: message,
+        }),
+      });
+
+      const result = await response.json();
+      setResponseMessage(result.message);
+
+      if (response.ok) {
+        setEmail('');
+        setMessage('');
+      }
+    } catch (error) {
+      setResponseMessage('Error al enviar el correo. Inténtalo de nuevo.');
+    }
+  };
+
   return (
 
 
@@ -50,14 +83,17 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
                 Simplemente envíanos tu idea de viaje y nuestro servicio impulsado por IA creará un itinerario a medida
                 según tus necesidades.
               </p>
-              <form className="flex flex-col space-y-4">
+              <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <Textarea
                                 placeholder="Describe tu idea de viaje aquí..."
                                 className="flex-1"
+                                value={message}
+          			onChange={(e) => setMessage(e.target.value)}
                                 required
                               />
 
-                              <Input type="email" placeholder="Ingresa tu correo electrónico" className="flex-1" />
+                              <Input type="email" placeholder="Ingresa tu correo electrónico" className="flex-1" 
+                              value={email} onChange={(e) => setEmail(e.target.value)}/>
                               <Button type="submit" variant="secondary">
                                 <HotelIcon/>Planifica mi viaje
                               </Button>
