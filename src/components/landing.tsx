@@ -53,7 +53,7 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
               <form className="flex flex-col space-y-4">
               <Textarea
                                 placeholder="Describe tu idea de viaje aquí..."
-                                className="w-full h-32 bg-blue-50 border-blue-200 text-gray-700 placeholder-gray-400"
+                                className="flex-1"
                                 required
                               />
 
