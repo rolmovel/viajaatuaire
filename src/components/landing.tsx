@@ -30,7 +30,7 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: rolmovel@gmail.com,
+          to: 'rolmovel@gmail.com',
           subject: 'Nuevo mensaje desde tu web',
           text: message,
         }),
