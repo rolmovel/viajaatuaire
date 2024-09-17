@@ -38,13 +38,13 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
       console.log(emailData);
       const json = {
           from: emailData.to,
-          to: 'rolmovel@gmail.com',
+          to: 'hola@preparamostuviaje.es',
           subject: 'Nueva peticion de viaje',
           text: emailData.text
           };
 
       console.log(json);
-      const response = await axios.post('/.netlify/functions/send-email', json);
+      const response = await axios.post('https://viajebeta.netlify.app/.netlify/functions/send-email', json);
       console.log('Correo enviado:', response.data.message);
     } catch (error) {
       console.error('Error al enviar correo:', error);
