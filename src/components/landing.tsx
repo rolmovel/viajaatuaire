@@ -8,6 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import PostMetadata from "@/components/PostMetadata";
 import { ApplicationLogger, LoggerFunction, LoggerLevel, Logger } from 'simple-logging-system';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import mailgun from 'mailgun-js';
 
 // Define las props que espera el componente Landing
 interface LandingProps {
@@ -24,29 +25,27 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: 'rolmovel@gmail.com',
-          subject: 'Nuevo mensaje desde tu web',
-          text: message,
-        }),
-      });
-
-      const result = await response.json();
-      setResponseMessage(result.message);
-
-      if (response.ok) {
-        setEmail('');
-        setMessage('');
-      }
+      sendEmail('rolmovel@gmail.com', 'Asunto del correo', message);
     } catch (error) {
       setResponseMessage('Error al enviar el correo. Inténtalo de nuevo.');
     }
   };
+
+async function sendEmail(to: string, subject: string, text: string): Promise<void> {
+  const data = {
+    from: 'TuNombre <tu-email@tudominio.com>',
+    to: to,
+    subject: subject,
+    text: text,
+  };
+
+  try {
+    const body = await mg.messages().send(data);
+    console.log('Correo enviado:', body);
+  } catch (error) {
+    console.error('Error al enviar correo:', error);
+  }
+}
 
   return (
 
