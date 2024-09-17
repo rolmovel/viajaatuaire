@@ -24,15 +24,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "app.teamhub.trackedBranches": "",
-    "git-widget-placeholder": "<unknown>",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/rolmovel/projects/frontend/viaja-a-tu-aire/public/assets"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;app.teamhub.trackedBranches&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;&lt;unknown&gt;&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/rolmovel/projects/frontend/viaja-a-tu-aire/public/assets&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/assets" />
@@ -45,6 +45,21 @@
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/app/about/[slug]" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="viajaatuaire" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="viajaatuaire" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

@@ -25,7 +25,7 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
   const mailgun = new Mailgun(formData);
   const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || '7a3af442-4d5256b2'});
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
