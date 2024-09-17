@@ -8,7 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import PostMetadata from "@/components/PostMetadata";
 import { ApplicationLogger, LoggerFunction, LoggerLevel, Logger } from 'simple-logging-system';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
-import mailgun from 'mailgun-js';
+import axios from 'axios';
 
 // Define las props que espera el componente Landing
 interface LandingProps {
@@ -17,29 +17,26 @@ interface LandingProps {
 
 const Landing: React.FC<LandingProps> = ({ posts }) => {
 
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [responseMessage, setResponseMessage] = useState('');
-  const formData = require('form-data');
-  const Mailgun = require('mailgun.js');
-  const mailgun = new Mailgun(formData);
-  const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || '7a3af442-4d5256b2'});
+  const [emailData, setEmailData] = useState({
+    to: '',
+    subject: '',
+    text: '',
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setEmailData({
+      ...emailData,
+      [name]: value,
+    });
+  };
 
+  const sendEmail = async () => {
     try {
-      mg.messages.create('sandbox-123.mailgun.org', {
-          from: "rolmovel@gmail.com",
-          to: ["rolmovel@gmail.com"],
-          subject: "Hello",
-          text: "Testing some Mailgun awesomness!",
-          html: "<h1>Testing some Mailgun awesomness!</h1>"
-        })
-        .then(msg => console.log(msg)) // logs response data
-        .catch(err => console.error(err)); // logs any error
+      const response = await axios.post('/.netlify/functions/send-email', emailData);
+      console.log('Correo enviado:', response.data.message);
     } catch (error) {
-      setResponseMessage('Error al enviar el correo. Inténtalo de nuevo.');
+      console.error('Error al enviar correo:', error);
     }
   };
 
@@ -78,18 +75,18 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
                 Simplemente envíanos tu idea de viaje y nuestro servicio impulsado por IA creará un itinerario a medida
                 según tus necesidades.
               </p>
-              <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+              <form className="flex flex-col space-y-4">
               <Textarea
                                 placeholder="Describe tu idea de viaje aquí..."
                                 className="flex-1"
-                                value={message}
-          			onChange={(e) => setMessage(e.target.value)}
+                                value={emailData.text}
+                                onChange={handleInputChange}
                                 required
                               />
 
                               <Input type="email" placeholder="Ingresa tu correo electrónico" className="flex-1" 
-                              value={email} onChange={(e) => setEmail(e.target.value)}/>
-                              <Button type="submit" variant="secondary">
+                              onChange={handleInputChange} value={emailData.to}/>
+                              <Button type="submit" variant="secondary" onClick={sendEmail}>
                                 <HotelIcon/>Planifica mi viaje
                               </Button>
 
