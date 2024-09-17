@@ -43,14 +43,6 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
     }
   };
 
-  try {
-    const body = await mg.messages().send(data);
-    console.log('Correo enviado:', body);
-  } catch (error) {
-    console.error('Error al enviar correo:', error);
-  }
-}
-
   return (
 
 
