@@ -21,7 +21,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.438.0",
     "mailgun-js": "^0.6.7",
-    "mailgun.js": "^3.7.3",
+    "mailgun.js": "^8.2.1",
     "markdown-it": "^14.1.0",
     "markdown-to-jsx": "^7.1.7",
     "marked": "^14.1.0",

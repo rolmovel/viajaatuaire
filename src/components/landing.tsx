@@ -18,13 +18,15 @@ interface LandingProps {
 const Landing: React.FC<LandingProps> = ({ posts }) => {
 
   const [emailData, setEmailData] = useState({
+    from: '',
     to: '',
     subject: '',
     text: '',
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    console.log(value);
     setEmailData({
       ...emailData,
       [name]: value,
@@ -33,7 +35,16 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
 
   const sendEmail = async () => {
     try {
-      const response = await axios.post('/.netlify/functions/send-email', emailData);
+      console.log(emailData);
+      const json = {
+          from: emailData.to,
+          to: 'rolmovel@gmail.com',
+          subject: 'Nueva peticion de viaje',
+          text: emailData.text
+          };
+
+      console.log(json);
+      const response = await axios.post('/.netlify/functions/send-email', json);
       console.log('Correo enviado:', response.data.message);
     } catch (error) {
       console.error('Error al enviar correo:', error);
@@ -77,15 +88,16 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
               </p>
               <form className="flex flex-col space-y-4">
               <Textarea
+                                name="text"
                                 placeholder="Describe tu idea de viaje aquí..."
                                 className="flex-1"
                                 value={emailData.text}
-                                onChange={handleInputChange}
+                                onChange={handleChange}
                                 required
                               />
 
-                              <Input type="email" placeholder="Ingresa tu correo electrónico" className="flex-1" 
-                              onChange={handleInputChange} value={emailData.to}/>
+                              <Input type="email" name="to" placeholder="Ingresa tu correo electrónico" className="flex-1"
+                              value={emailData.to} onChange={handleChange}/>
                               <Button type="submit" variant="secondary" onClick={sendEmail}>
                                 <HotelIcon/>Planifica mi viaje
                               </Button>
