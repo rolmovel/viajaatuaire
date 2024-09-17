@@ -20,7 +20,7 @@ const Landing: React.FC<LandingProps> = ({ posts }) => {
   const [message, setMessage] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
